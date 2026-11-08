@@ -1,6 +1,6 @@
 ---
 name: checklist
-description: Checklist di avanzamento in chat per qualunque progetto. Installa ciò che manca (registro documenti/lavori.yaml, script strumenti-locali/avanzamento/stato.mjs, regola nel CLAUDE.md, righe in .git/info/exclude) e apre la chat «Checklist: <progetto>» con il widget. Usa quando l'utente scrive /checklist o chiede di installare la checklist in un progetto. Per mostrare la checklist in un progetto che ce l'ha già basta la regola del suo CLAUDE.md.
+description: Checklist di avanzamento in chat per qualunque progetto. Installa ciò che manca (registro documenti/lavori.yaml, script strumenti-locali/avanzamento/stato.mjs, regola nel CLAUDE.md, righe in .git/info/exclude) e apre la chat «Checklist: nome del progetto» con il widget. Usa quando l'utente scrive /checklist o chiede di installare la checklist in un progetto. Per mostrare la checklist in un progetto che ce l'ha già basta la regola del suo CLAUDE.md.
 ---
 
 # /checklist: la checklist di avanzamento nel progetto
