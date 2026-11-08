@@ -45,6 +45,7 @@ Il passo è finito quando hai il nome, che qui sotto si chiama `<PROGETTO>`.
 Fai solo ciò che il passo 2 ha trovato mancante. Mai sovrascrivere né modificare ciò che c'è.
 
 1. **Registro.** Se manca: `mkdir -p documenti` e `[ -e documenti/lavori.yaml ] || sed "s/<OGGI>/$(date +%F)/g" "<base>/modelli/lavori.yaml" > documenti/lavori.yaml` (la guardia protegge un registro esistente anche se il passo 2 ha sbagliato).
+   Se però lo script c'è già, il progetto può avere una checklist sua che legge un altro registro (per esempio `lavori.json`): prima chiedi con AskUserQuestion se creare `documenti/lavori.yaml`. Prima opzione, consigliata: non crearlo. Se la risposta è no, o se non puoi fare domande, non crearlo, scrivi una riga che lo dice e salta anche le righe di esclusione (punto 4), che nasconderebbero a git i file della checklist del progetto.
 2. **Script.** Se manca: `mkdir -p strumenti-locali/avanzamento` e `cp -n "<base>/modelli/stato.mjs" strumenti-locali/avanzamento/stato.mjs`.
 3. **Blocco nel CLAUDE.md.** Se manca:
    - leggi `<base>/modelli/claude-md.md` e sostituisci ogni `<PROGETTO>` con il nome;
@@ -74,7 +75,7 @@ Fallo sia dopo un'installazione sia quando c'era già tutto.
    - `effort`: `low` (la chat esegue uno script e compone un widget: non serve lo sforzo della sessione da cui parte)
    - `title`: «Checklist: <PROGETTO>»
    - `prompt`: «Esegui `node strumenti-locali/avanzamento/stato.mjs` e mostra la checklist come dice il CLAUDE.md»
-   - `background`: «Checklist di avanzamento del progetto <PROGETTO>: il registro è `documenti/lavori.yaml`, lo script `strumenti-locali/avanzamento/stato.mjs`. Il CLAUDE.md del progetto dice come mostrarla e quando aggiornare il registro.»
+   - `background`: «Checklist di avanzamento del progetto <PROGETTO>: lo script è `strumenti-locali/avanzamento/stato.mjs`. Il CLAUDE.md del progetto dice qual è il registro, come mostrare la checklist e quando aggiornare il registro.»
 3. Subito dopo chiama `detach_session` con l'id restituito: è una chat principale, non una sottochat.
 4. Se `start_session` manca (CLI) o rifiuta: esegui `node strumenti-locali/avanzamento/stato.mjs` e mostra la checklist in questa chat, come dice `<base>/modelli/claude-md.md`: con `show_widget`, oppure in tabella markdown se `show_widget` manca.
 5. Se `start_session` riesce ma lo stacco manca o rifiuta, scrivi una riga: «Staccala dalla barra laterale con Detach to top level».

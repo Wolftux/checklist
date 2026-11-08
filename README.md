@@ -24,7 +24,7 @@ Scrivi `/checklist` nella cartella del progetto (nel menu può comparire come `/
 - Un blocco «Checklist di avanzamento» in coda al `CLAUDE.md`, senza toccare il resto del file.
 - Con git, due righe in `.git/info/exclude` (`**/documenti/lavori.yaml` e `**/strumenti-locali/avanzamento/`): registro e script restano fuori dal repo.
 
-Ciò che esiste già non viene sovrascritto.
+Ciò che esiste già non viene sovrascritto. Se lo script c'è già ma il registro no, `/checklist` chiede prima di crearlo: il progetto può avere una checklist sua con un altro registro.
 
 ## Formato del registro
 
