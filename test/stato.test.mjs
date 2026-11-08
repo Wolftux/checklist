@@ -8,6 +8,10 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { leggiRegistro, calcolaStato } from '../plugins/checklist/checklist/modelli/stato.mjs';
 
+// I test non dipendono dalla configurazione git di chi li lancia.
+process.env.GIT_CONFIG_GLOBAL = '/dev/null';
+process.env.GIT_CONFIG_NOSYSTEM = '1';
+
 const MODELLI = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'plugins', 'checklist', 'checklist', 'modelli');
 
 test('il modello lavori.yaml dà una voce e zero errori', () => {
@@ -43,6 +47,14 @@ test('fine riga Windows, BOM e trattino a colonna 0', () => {
 test('registro svuotato: nessuna voce, nessun errore', () => {
   assert.deepEqual(leggiRegistro(''), { voci: [], errori: [] });
   assert.deepEqual(leggiRegistro('# solo commenti\n\nlavori:\n  # niente\n'), { voci: [], errori: [] });
+});
+
+test('inizio registro: lavori: []', () => {
+  assert.deepEqual(leggiRegistro('lavori: []\n'), { voci: [], errori: [] });
+});
+
+test('inizio registro: lavori: con un commento dopo', () => {
+  assert.deepEqual(leggiRegistro('lavori: # commento\n  - id: a\n'), { voci: [{ id: 'a' }], errori: [] });
 });
 
 test("chiave ripetuta: vale l'ultima", () => {
@@ -121,6 +133,11 @@ test('righe non capite in lavori_errore', () => {
   const s = calcolaStato(progetto('lavori:\n  - id: a\n    note: |\n      continua\n'));
   assert.equal(s.lavori_errore, 'documenti/lavori.yaml: riga 3 non capita: «    note: |»; riga 4 non capita: «      continua»');
   assert.equal(s.lavori.length, 1);
+});
+
+test('più di 5 righe non capite: ne elenca 5 e conta le altre', () => {
+  const s = calcolaStato(progetto('lavori:\n' + [1, 2, 3, 4, 5, 6, 7].map((n) => `x${n}\n`).join('')));
+  assert.equal(s.lavori_errore, 'documenti/lavori.yaml: riga 2 non capita: «x1»; riga 3 non capita: «x2»; riga 4 non capita: «x3»; riga 5 non capita: «x4»; riga 6 non capita: «x5»; e altre 2 righe non capite');
 });
 
 test('git: senza repo tutto a null o 0', () => {

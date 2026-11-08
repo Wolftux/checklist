@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const IGNORA = /^\s*(#|$)/;
-const INIZIO_REGISTRO = /^lavori:\s*$/;
+const INIZIO_REGISTRO = /^lavori:(\s+\[\s*\])?(\s+#.*)?\s*$/; // anche `lavori: []` e `lavori: # …`
 const INIZIO_VOCE = /^(\s*)-(\s+)([A-Za-z_][\w-]*):(?:\s+(.*))?$/;
 const CAMPO = /^(\s*)([A-Za-z_][\w-]*):(?:\s+(.*))?$/;
 const MULTIRIGA = /^[|>][-+0-9]*$/;
@@ -88,9 +88,11 @@ function leggiLavori(radice) {
       : ['in_corso', 'in_attesa'].includes(v.stato) ? 'in_corso' : 'da_fare';
     return v;
   });
+  const elenco = errori.slice(0, 5).map((e) => `riga ${e.riga} non capita: «${e.testo}»`);
+  if (errori.length > 5) elenco.push(`e altre ${errori.length - 5} righe non capite`);
   return {
     lavori,
-    errore: errori.length ? `${FILE_REGISTRO}: ` + errori.map((e) => `riga ${e.riga} non capita: «${e.testo}»`).join('; ') : null,
+    errore: elenco.length ? `${FILE_REGISTRO}: ${elenco.join('; ')}` : null,
     modificato: fs.statSync(file).mtime.toISOString(),
   };
 }
