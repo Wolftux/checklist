@@ -46,12 +46,15 @@ Fai solo ciò che il passo 2 ha trovato mancante. Mai sovrascrivere né modifica
 2. **Script.** Se manca: `mkdir -p strumenti-locali/avanzamento` e `cp "<base>/modelli/stato.mjs" strumenti-locali/avanzamento/stato.mjs`.
 3. **Blocco nel CLAUDE.md.** Se manca:
    - leggi `<base>/modelli/claude-md.md` e sostituisci ogni `<PROGETTO>` con il nome;
-   - se `CLAUDE.md` non esiste, crealo con il solo blocco;
-   - se esiste, leggilo, poi scrivilo di nuovo con lo strumento di scrittura di file: il testo che c'è, un a capo se non finiva con un a capo, una riga vuota, poi il blocco. Se il testo finiva già con una riga vuota, non aggiungerne un'altra. Controlla l'ultimo byte con `tail -c1 CLAUDE.md`.
+   - esegui `mktemp -d` e scrivi il blocco già sostituito, con lo strumento di scrittura di file, in `<tmp>/blocco.md` (`<tmp>` è la cartella stampata);
+   - se `CLAUDE.md` esiste e non è vuoto, prepara la coda con questi due comandi, che rispondono da soli (non leggere né riscrivere il file):
+     `[ -s CLAUDE.md ] && [ -n "$(tail -c1 CLAUDE.md)" ] && printf '\n' >> CLAUDE.md` (aggiunge l'a capo finale se manca)
+     `[ -s CLAUDE.md ] && [ -n "$(tail -n1 CLAUDE.md)" ] && printf '\n' >> CLAUDE.md` (aggiunge la riga vuota se l'ultima riga non è vuota)
+   - accoda il blocco: `cat "<tmp>/blocco.md" >> CLAUDE.md` (crea il file se non esiste). Il testo dell'utente non si riscrive mai.
    - Non usare `sed`: il nome può contenere `/` o `&`.
 4. **Righe di esclusione**, solo con git. Sia `<exclude>` il percorso stampato da `git rev-parse --git-path info/exclude`.
    - `mkdir -p "$(dirname "<exclude>")"`.
-   - Se il file esiste, non è vuoto e non finisce con un a capo (`tail -c1`), aggiungi un a capo: `printf '\n' >> "<exclude>"`.
+   - Aggiungi l'a capo finale se manca (il comando risponde da solo): `[ -s "<exclude>" ] && [ -n "$(tail -c1 "<exclude>")" ] && printf '\n' >> "<exclude>"`.
    - Per ciascuna riga che manca tra `documenti/` e `strumenti-locali/`: `printf '%s\n' 'documenti/' >> "<exclude>"` (o `'strumenti-locali/'`).
 5. **Senza git**, scrivi una riga di avviso: «Qui non c'è git: la riga del repo nel widget resterà vuota».
 
