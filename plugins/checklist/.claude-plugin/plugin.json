@@ -1,0 +1,10 @@
+{
+  "name": "checklist",
+  "displayName": "Checklist",
+  "version": "1.0.0",
+  "description": "/checklist: registro dei lavori concordati con Claude e checklist di avanzamento in chat, in qualunque progetto.",
+  "author": { "name": "Mattia Balboni" },
+  "license": "MIT",
+  "keywords": ["checklist", "avanzamento", "progetto", "italiano"],
+  "skills": ["./checklist"]
+}

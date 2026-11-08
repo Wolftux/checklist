@@ -1,0 +1,12 @@
+{
+  "name": "checklist",
+  "description": "Checklist: i lavori concordati con Claude, in chat, in italiano.",
+  "owner": { "name": "Mattia Balboni" },
+  "plugins": [
+    {
+      "name": "checklist",
+      "source": "./plugins/checklist",
+      "description": "/checklist installa nel progetto il registro dei lavori, lo script di stato e la regola per il CLAUDE.md, poi mostra la checklist in una chat dedicata."
+    }
+  ]
+}
