@@ -1,0 +1,34 @@
+# Lavori concordati con Claude: registro della checklist di avanzamento.
+# Lo legge strumenti-locali/avanzamento/stato.mjs. Resta fuori dal repo pubblico (.git/info/exclude).
+#
+# Regola: ogni volta che si concorda, chiede o chiude un lavoro, si aggiorna qui
+# (voce nuova, oppure cambio di stato e data), oltre che in HISTORY.md se il progetto ce l'ha.
+#
+# Campi di ogni voce:
+#   id          sigla breve, unica
+#   titolo      cosa va fatto, in una riga
+#   gruppo      libero (es. Codice | Prove | Pubblicazione)
+#   stato       da_fare | in_corso | in_attesa (aspetta l'utente o una risposta) | fatto | rinviato
+#   chi         utente | Claude | esterni
+#   concordato  data in cui è stato concordato (AAAA-MM-GG)
+#   fatto       data di chiusura (solo con stato fatto)
+#   note        dettagli utili, facoltativi
+#   fonte       dove è scritto, facoltativo
+# «Aperti» = tutti tranne fatto e rinviato.
+#
+# Formato: YAML semplificato.
+#   - Ogni valore sta su una riga: niente | o > per i testi su più righe.
+#   - Niente liste o voci annidate dentro una voce.
+#   - I commenti stanno su una riga a sé: un # dentro un valore è testo, come i due punti.
+#   - Le virgolette esterne ("..." o '...') sono facoltative e si tolgono.
+#   Una riga che lo script non capisce non lo ferma: compare nella checklist con il suo numero.
+
+lavori:
+  - id: checklist
+    titolo: Installata la checklist di avanzamento
+    gruppo: Checklist
+    stato: fatto
+    chi: Claude
+    concordato: <OGGI>
+    fatto: <OGGI>
+    fonte: /checklist
