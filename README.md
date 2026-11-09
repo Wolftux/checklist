@@ -15,7 +15,7 @@ Poi riavvia Claude Code (oppure lancia `/reload-plugins`).
 
 ## Uso
 
-Scrivi `/checklist` nella cartella del progetto (nel menu può comparire come `/checklist:checklist`). La skill installa ciò che manca e apre la chat «Checklist: <progetto>» con la checklist. Per aggiungere o chiudere lavori basta dirlo in chat: la regola nel `CLAUDE.md` fa aggiornare il registro. Il pulsante «Aggiorna» scrive nella chat il messaggio «Aggiorna la checklist di …»: se non parte da solo, invialo.
+Scrivi `/checklist` nella cartella del progetto (nel menu può comparire come `/checklist:checklist`). La skill installa ciò che manca e apre la chat «Checklist: <progetto>» con la checklist. In un progetto già avviato, prima di aprirla scrive nel registro nuovo i lavori fatti e aperti che trova in `HISTORY.md`, `HANDOFF.md`, nei piani e negli ultimi commit. Per aggiungere o chiudere lavori basta dirlo in chat: la regola nel `CLAUDE.md` fa aggiornare il registro. Il pulsante «Aggiorna» scrive nella chat il messaggio «Aggiorna la checklist di …»: se non parte da solo, invialo.
 
 ## Cosa lascia nel progetto
 
@@ -77,7 +77,7 @@ Then restart Claude Code (or run `/reload-plugins`).
 
 ## Use
 
-Type `/checklist` in the project folder (the menu may show it as `/checklist:checklist`). It adds what is missing (`documenti/lavori.yaml`, `strumenti-locali/avanzamento/stato.mjs`, a block in `CLAUDE.md`, two lines in `.git/info/exclude`: `**/documenti/lavori.yaml` and `**/strumenti-locali/avanzamento/`) and opens the checklist chat. Add or close jobs by saying so in chat. The «Aggiorna» (refresh) button writes the message «Aggiorna la checklist di …» in the chat: if it is not sent on its own, send it.
+Type `/checklist` in the project folder (the menu may show it as `/checklist:checklist`). It adds what is missing (`documenti/lavori.yaml`, `strumenti-locali/avanzamento/stato.mjs`, a block in `CLAUDE.md`, two lines in `.git/info/exclude`: `**/documenti/lavori.yaml` and `**/strumenti-locali/avanzamento/`) and opens the checklist chat. In a project already under way, it first fills the new registry with the done and open jobs it finds in `HISTORY.md`, `HANDOFF.md`, plans and recent commits. Add or close jobs by saying so in chat. The «Aggiorna» (refresh) button writes the message «Aggiorna la checklist di …» in the chat: if it is not sent on its own, send it.
 
 ## Limits
 

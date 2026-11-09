@@ -63,7 +63,30 @@ Fai solo ciò che il passo 2 ha trovato mancante. Mai sovrascrivere né modifica
 
 Il passo è finito quando ogni pezzo mancante è stato creato. Se non mancava nulla, il passo è finito subito.
 
-## Passo 5: apertura della chat della checklist
+## Passo 5: i lavori che il progetto ha già
+
+Questo passo vale quando il passo 4 ha appena creato `documenti/lavori.yaml`. Se il registro c'era già o non è stato creato, vai al passo 6.
+
+Un progetto già avviato ha lavori fatti e aperti scritti altrove. Il registro li deve avere prima che la checklist si apra: con la sola voce dell'installazione direbbe «1 su 1, tutto fatto».
+
+1. Leggi le fonti che il progetto ha:
+   - `HISTORY.md` e `HANDOFF.md`;
+   - i documenti con piani, fasi o cose da fare (per esempio in `docs/` o `wiki/`, un `TODO.md`, i ledger `.superpowers/sdd/*/progress.md`);
+   - con git, gli ultimi commit: `git log --date=short --format='%ad %s' -30`.
+2. Per ogni lavoro concordato che trovi, accoda una voce a `documenti/lavori.yaml`, con la forma della voce `checklist` e le regole scritte in cima al file:
+   - lo stato è quello della fonte più recente che ne parla: un «da fare» in una voce vecchia può essere stato chiuso dopo;
+   - un lavoro chiuso ha `stato: fatto` e la data `fatto`; uno aperto ha `da_fare`, `in_corso` o `in_attesa`;
+   - `chi` è chi l'ha fatto o chi deve muoversi;
+   - le date vengono dalle fonti (le voci di HISTORY.md e i commit le hanno); se una fonte non ne ha, usa la data di oggi;
+   - `fonte` è il file da cui hai preso il lavoro.
+   Una voce per lavoro concordato o per fase: le fasi vecchie già chiuse si riuniscono in una voce sola, e una ventina di voci basta anche per un progetto lungo. Scrivi i lavori aperti nell'ordine in cui vanno fatti: la checklist prende come prossimo passo il primo che aspetta l'utente.
+3. Esegui `node strumenti-locali/avanzamento/stato.mjs` e controlla due campi: `lavori_errore` è `null`, e `riepilogo.lavori_totali` conta le voci che hai scritto più quella dell'installazione. Se no, correggi le voci che hai scritto.
+
+Se il progetto non ha fonti, il registro resta con la sola voce dell'installazione: è un progetto nuovo.
+
+Il passo è finito quando ogni lavoro trovato nelle fonti ha la sua voce e lo script legge il registro senza errori, oppure quando il progetto non ha fonti.
+
+## Passo 6: apertura della chat della checklist
 
 Fallo sia dopo un'installazione sia quando c'era già tutto.
 
@@ -83,10 +106,11 @@ Fallo sia dopo un'installazione sia quando c'era già tutto.
 
 Il passo è finito quando la chat è aperta e staccata, oppure la checklist è stata mostrata in questa chat.
 
-## Passo 6: messaggio finale
+## Passo 7: messaggio finale
 
-Scrivi due o tre righe:
+Scrivi tre o quattro righe:
 - cosa hai aggiunto, oppure «C'era già tutto»;
+- se il passo 5 ha scritto lavori nel registro, quanti e da quali file, da controllare nella checklist;
 - gli avvisi, se ce ne sono;
 - dove trovare la chat della checklist.
 
